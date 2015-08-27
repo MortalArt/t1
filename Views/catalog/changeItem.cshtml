@@ -1,0 +1,44 @@
+﻿@model Store.Models.Item
+@{
+    List<Store.Models.Category> menuList = ViewBag.Categories;
+}
+
+@using (Html.BeginForm("changeItem", "catalog", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+        @Html.HiddenFor(m => m.Id)
+        @Html.HiddenFor(m => m.Image)
+        <p>
+            @Html.LabelFor(m => m.Name, "Название товара")
+            <br />
+            @Html.EditorFor(m => m.Name)
+        </p>
+        <p>
+            @Html.LabelFor(m => m.CategoryId, "Категория")
+            <br />
+            <select name="CategoryId">
+                @foreach (var cat in ViewBag.Categories)
+                {
+                    <option value="@cat.Id" @(cat.Id == Model.CategoryId ? "selected" : "")>@cat.Name</option>
+                }
+            </select>   
+        </p>
+        <p>
+            @Html.LabelFor(m => m.Price, "Цена")
+            <br />
+            @Html.EditorFor(m => m.Price)
+        </p>
+        <p>
+            <img src="@Model.Image" />
+        </p>
+        <p>
+            Изменить изображение: <input type="file" name="file" id="file" />
+        </p>
+        <p><input type="submit" value="Отправить" class="button" /></p>
+    
+}
+@using (Html.BeginForm("removeItem", "catalog", FormMethod.Post))
+{
+    @Html.HiddenFor(m => m.Id)
+    <p><input type="submit" value="Удалить" class="button" /></p>
+}

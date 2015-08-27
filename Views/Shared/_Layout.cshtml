@@ -1,0 +1,81 @@
+﻿@{ 
+    List<Store.Models.Category> menuList = ViewBag.Categories;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title</title>
+    <link href="@Url.Content("~/Content/css/normalize.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/css/skeleton.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/css/custom.css")" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="row">
+                <div class="one-half column">
+                    <a href="/"><img src="~/Content/img/logo-wwf.gif" /></a>
+                </div>
+                <div class="one-half column">
+                    @if (User.Identity.IsAuthenticated) {
+                        <b>Добро пожаловать, @User.Identity.Name</b>
+                        <a href="/account/logoff/">Выйти</a>
+                        <br />
+                        <a href="/catalog/add/">Добавить товар</a>
+                        <a href="/catalog/changeCategories/">Изменить категории</a>
+                    }
+                    else
+                    {
+                        <a href="/account/login/">Вход</a>
+                        <a href="/account/register/">Регистрация</a>
+                    }
+                </div>
+            </div>
+            <nav>
+                <ul>
+                    <li class="main"><a href="/">Каталог</a></li>
+                    @if (ViewBag.Categories != null)
+                    {
+                        foreach (var ul in menuList.Where(p => p.ParentId == 0))
+                        {
+                            <li><a href="/catalog/category/@ul.Id">@ul.Name</a>
+                            @if (menuList.Where(p => p.ParentId == ul.Id) != null)
+                            {
+                            <ul>
+                                @foreach (var i in menuList.Where(p => p.ParentId == ul.Id))
+                                {
+                                    <li><a href="/catalog/category/@i.Id">@i.Name</a></li>
+                                }
+                            </ul>
+                            }
+                        </li>
+                        }
+                        /*
+                            foreach (var a in ViewBag.Categories)
+                            {
+                                if(a.ParentId == 0)
+                                {
+                                    <span>a.Name</span>
+                                    { ViewBag.Categories.Where}
+                                    <ul>
+
+                                    </ul>
+                                }
+                                <a href="/catalog/category/@a.Id">@a.Name</a>
+                            }
+                        */
+                    }
+                </ul>
+
+            </nav>
+        </div>
+    </header>
+    <div class="container">
+        <h1>@ViewBag.Title</h1>
+        @RenderBody()
+    </div>
+</body>
+</html>

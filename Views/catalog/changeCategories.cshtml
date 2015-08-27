@@ -1,0 +1,65 @@
+﻿@model Store.Models.Category
+@{
+    List<Store.Models.Category> categories = ViewBag.Categories;
+}
+<div class="row">
+    <div class="one-half column">
+        <h4>Добавление категории</h4>
+        @using (Html.BeginForm("addCat", "catalog", FormMethod.Post))
+        {
+            @Html.LabelFor(model => model.Name, "Название категории")
+            <br />
+            @Html.EditorFor(model => model.Name)
+            <br /><br />
+            @Html.LabelFor(model => model.ParentId, "Родительская категория")
+            <select name="ParentId">
+                <option value="0">Нет</option>
+                @foreach (var cat in categories.Where(p => p.ParentId == 0))
+                {
+                    <option value="@cat.Id">@cat.Name</option>
+                }
+            </select>
+            <button type="submit" class="button">Добавить</button>
+        }
+    </div>
+    <div class="one-half column">
+        <h4>Изменить название категории</h4>
+        @using (Html.BeginForm("changeCat", "catalog", FormMethod.Post))
+        {
+            @Html.LabelFor(model => model.Name, "Старое название категории")
+            <select name="Id">
+                @foreach (var cat in ViewBag.Categories)
+                {
+                    <option value="@cat.Id">@cat.Name</option>
+                }
+            </select>
+            @Html.LabelFor(model => model.Name, "Новое название категории")
+            @Html.EditorFor(model => model.Name)
+            @Html.LabelFor(model => model.ParentId, "Родительская категория")
+            <select name="ParentId">
+                @foreach (var cat in categories.Where(p => p.ParentId == 0))
+                {
+                    <option value="@cat.Id">@cat.Name</option>
+                }
+            </select>
+            <br />
+            <button type="submit" class="button">Изменить</button>
+        }
+    </div>
+</div>
+<div class="row">
+    <div class="one-half column">
+        <h4>Удаление категорий</h4>
+        @using (Html.BeginForm("removeCat", "catalog", FormMethod.Post))
+        {
+            <select name="Id">
+                @foreach (var cat in categories)
+                {
+                    <option value="@cat.Id">@cat.Name</option>
+                }
+            </select>
+            <br />
+            <button type="submit" class="button">Удалить</button>
+        }
+    </div>
+</div>

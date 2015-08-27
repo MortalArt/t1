@@ -1,0 +1,23 @@
+﻿@model Store.Models.Item
+<div class="row">
+        <h3>Добавление товара</h3>
+
+        @using (Html.BeginForm("addItem", "catalog", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.LabelFor(model => model.Name, "Название товара")
+            @Html.EditorFor(model => model.Name)
+            @Html.LabelFor(model => model.CategoryId, "Категория")
+            <select name="CategoryId">
+                @foreach(var cat in ViewBag.Categories)
+                {
+                    <option value="@cat.Id">@cat.Name</option>
+                }
+            </select>   
+            @Html.LabelFor(model => model.Price, "Цена")
+            @Html.EditorFor(model => model.Price)
+            <label for="file">Изображение</label>
+            <input type="file" name="file" id="file" />
+            <br />
+            <input type="submit" value="Добавить" />
+        }
+</div>

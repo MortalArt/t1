@@ -1,0 +1,19 @@
+﻿@foreach (var i in ViewBag.Items)
+{
+    <div class="row">
+        <div class="one-third column">
+            <img src="@i.Image" />
+        </div>
+        <div class="two two-thirds column">
+            <h3>@i.Name</h3>
+            <h5>@i.Category.Name</h5>
+            <h6>@i.Price руб.</h6>
+            @if(User.Identity.IsAuthenticated)
+            {
+                <p>
+                    <a href="/catalog/changeItem/@i.Id">Изменить</a>
+                </p>
+            }            
+        </div>
+    </div>
+}

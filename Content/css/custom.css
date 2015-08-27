@@ -1,0 +1,19 @@
+﻿img{
+    max-width: 100%;
+}
+body{
+      background-color: rgb(252, 254, 252);
+}
+header img{
+    height: 80px;
+}
+header nav > ul{
+    display:block;
+}
+header nav > ul > li {
+    display: inline-block;
+    vertical-align: top;
+}
+header nav > ul > li > ul > li{
+    display: block;
+}
